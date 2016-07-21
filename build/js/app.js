@@ -128,7 +128,14 @@
 (function (angular) {
     'use strict';
 
-    function HomeController() {}
+    function HomeController($state, ExhibitService, DocentService) {
+        var vm;
+
+        vm = this;
+
+        vm.isReady = true;
+
+    }
 
     angular.module('sky-beacons')
         .controller('HomeController', HomeController);
@@ -144,7 +151,7 @@ angular.module('sky-beacons.templates', []).run(['$templateCache', function($tem
     $templateCache.put('../public/app/views/exhibits/exhibits.html',
         'Hello, World!');
     $templateCache.put('../public/app/views/home/home.html',
-        'Home Page');
+        '<div class=container><div class=row><div class=col-md-12><h2>Exhibits</h2><div ng-repeat="exhibit in homeCtrl.exhibits" class="panel panel-default"><div class=panel-body><h3>{{:: exhibit.name }}</h3><img></div></div></div></div><div class=row><div class=col-md-12><h2>Docents</h2><div ng-repeat="docent in homeCtrl.docents" class="panel panel-default"><div class=panel-body><h3>{{:: docent.name }}</h3><img></div></div></div></div></div>');
 }]);
 
 //# sourceMappingURL=app.js.map

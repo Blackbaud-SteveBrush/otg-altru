@@ -1,1 +1,24 @@
-Home Page
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Exhibits</h2>
+      <div ng-repeat="exhibit in homeCtrl.exhibits" class="panel panel-default">
+        <div class="panel-body">
+          <h3>{{:: exhibit.name }}</h3>
+          <img />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Docents</h2>
+      <div ng-repeat="docent in homeCtrl.docents" class="panel panel-default">
+        <div class="panel-body">
+          <h3>{{:: docent.name }}</h3>
+          <img />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
