@@ -39,6 +39,16 @@
                 url: '/exhibits/:slug',
                 templateUrl: '../public/app/views/admin/exhibits/exhibits.html',
                 controller: 'ExhibitsListController as exhibitsCtrl'
+            })
+            .state('admin.forms', {
+                abstract: true,
+                url: '/forms',
+                template: '<ui-view />'
+            })
+            .state('admin.forms.exhibit', {
+                url: '/exhibit/:id',
+                templateUrl: '../public/app/views/admin/forms/exhibit/exhibit.html',
+                controller: 'ExhibitFormController as formCtrl'
             });
     }
 
@@ -49,7 +59,7 @@
 
     angular.module('sky-beacons', [
         'ui.router',
-        'sky', 
+        'sky',
         'ui.bootstrap',
         'sky-beacons.templates'
     ])
