@@ -35,6 +35,7 @@
             required: true,
             trim: true
         },
+        pieces: [pieceSchema],
         slug: {
             type: String,
             slug: 'name',
