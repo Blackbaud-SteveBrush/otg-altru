@@ -34,6 +34,41 @@
             
             return deferred.promise;
         };
+
+        service.add = function (data) {
+            var deferred = $q.defer();
+
+            $http.post('/api/exhibits/', {
+                data : data,
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(function (res) {
+                if (res.data.error) {
+                    deferred.resolve(res.data);
+                } else {
+                    deferred.resolve(res.data);
+                }
+            });
+
+            return deferred.promise;
+        };
+
+        service.edit = function (data) {
+            var deferred;
+
+            $http.put('/api/exhibits/' + data._id, {
+                data: data
+            }).then(function (res) {
+                if (res.data.error) {
+                    deferred.resolve(res.data);
+                } else {
+                    deferred.resolve(res.data);
+                }
+            });
+
+            return deferred.promise;
+        };
     }
 
     ExhibitService.$inject = [
