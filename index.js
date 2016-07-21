@@ -4,41 +4,59 @@
     var app,
         bodyParser,
         cookieParser,
+        Database,
+        database,
         environment,
         express,
+        favicon,
+        fs,
         handlebars,
         http,
-        favicon,
+        mongoose,
         path,
         port,
+        routes,
+        schedule,
         server;
 
+    fs = require('fs');
     express = require('express');
     favicon = require('serve-favicon');
     cookieParser = require('cookie-parser');
     bodyParser = require('body-parser');
+    mongoose = require('mongoose');
+    Database = require('./server/database/classes/Database');
+    routes = require('./server/routes');
     handlebars  = require('express-handlebars');
-    path = require('path');
+    path = require("path");
     http = require('http');
 
     port = process.env.PORT || '3000';
     environment = process.env.NODE_ENV || 'development';
+    database = new Database({
+        databaseUri: process.env.DATABASE_URI || 'mongodb://localhost:27017/sky-beacons',
+        service: mongoose
+    });
 
     app = express();
 
     app.set('views', path.join(__dirname, 'server', 'views'));
     app.set('view engine', 'handlebars');
     app.engine('handlebars', handlebars({
-        defaultLayout: 'app',
+        defaultLayout: 'main',
         layoutsDir: path.join(__dirname, 'server', 'views', 'layouts')
     }));
 
     app.use(bodyParser.json());
-    app.use(cookieParser());
     app.use(favicon(__dirname + '/build/images/favicon.ico'));
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'build')));
 
-    // Catch 404 and forward to error handler.
+    // Content pages.
+    app.get('/', routes.index);
+
+    // Catch 404 and forward to error handler
     app.use(function (req, res, next) {
         var err = new Error('Not Found');
         err.status = 404;
@@ -56,6 +74,9 @@
         });
     }
 
+    database.connect(function () {
+        console.log("Database connected.");
+    });
     app.set('port', port);
     server = http.createServer(app);
     server.listen(port, function () {

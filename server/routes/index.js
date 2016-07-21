@@ -8,9 +8,10 @@
     };
 
     routes.index = function (req, res, next) {
+        console.log("Hello");
         res.render('home', {
             angularApp: 'sky-beacons',
-            layout: 'app',
+            layout: 'main',
             title: 'Sky Beacons'
         });
     };
