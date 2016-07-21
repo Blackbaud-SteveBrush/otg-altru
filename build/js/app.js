@@ -23,6 +23,18 @@
                 templateUrl: '../public/app/views/exhibit/exhibit.html',
                 controller: 'ExhibitController as exhibitCtrl'
             });
+
+        $stateProvider
+            .state('admin', {
+                abstract: true,
+                url: '/admin',
+                template: '<ui-view />'
+            })
+            .state('admin.beacons', {
+                url: '/beacons',
+                templateUrl: '../public/app/views/admin/beacons/beacons.html',
+                controller: 'BeaconsListController as beaconsCtrl'
+            });
     }
 
     ConfigRoutes.$inject = [
@@ -37,6 +49,14 @@
         .config(ConfigRoutes);
 }(window.angular));
 
+(function (angular) {
+    'use strict';
+
+    function BeaconsListController() {}
+
+    angular.module('sky-beacons')
+        .controller('BeaconsListController', BeaconsListController);
+}(window.angular));
 (function (angular) {
     'use strict';
 
@@ -65,6 +85,8 @@
 }(window.angular));
 
 angular.module('sky-beacons.templates', []).run(['$templateCache', function($templateCache) {
+    $templateCache.put('../public/app/views/admin/beacons/beacons.html',
+        'Hello, Worlds!');
     $templateCache.put('../public/app/views/exhibit/exhibit.html',
         'Hello, World!');
     $templateCache.put('../public/app/views/exhibits/exhibits.html',

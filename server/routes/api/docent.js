@@ -1,31 +1,31 @@
 (function () {
     'use strict';
 
-    var ExhibitService,
+    var DocentService,
         utils;
 
-    ExhibitService = require('../../database/services/exhibit');
+    DocentService = require('../../database/services/docent');
     utils = require('../../libs/utils');
 
     module.exports = {
-        deleteExhibit: function (request, response, next) {
-            ExhibitService.deleteOne(request.params.id).then(function (data) {
+        deleteDocent: function (request, response, next) {
+            DocentService.deleteOne(request.params.id).then(function (data) {
                 response.json({
-                    success: "Exhibit deleted successfully."
+                    success: "Docent deleted successfully."
                 });
             }).catch(function (error) {
                 utils.parseError(response, error);
             });
         },
-        getExhibit: function (request, response, next) {
-            ExhibitService.findOneById(request.params.id).then(function (data) {
+        getDocent: function (request, response, next) {
+            DocentService.findOneById(request.params.id).then(function (data) {
                 response.json(data);
             }).catch(function (error) {
                 utils.parseError(response, error);
             });
         },
-        getExhibits: function (request, response, next) {
-            ExhibitService.findAll().then(function (data) {
+        getDocents: function (request, response, next) {
+            DocentService.findAll().then(function (data) {
                 response.json({
                     count: data.length || 0,
                     value: data
@@ -34,15 +34,15 @@
                 utils.parseError(response, error);
             });
         },
-        postExhibit: function (request, response, next) {
-            ExhibitService.create(request.body.data).then(function (data) {
+        postDocent: function (request, response, next) {
+            DocentService.create(request.body.data).then(function (data) {
                 response.json(data);
             }).catch(function (error) {
                 utils.parseError(response, error);
             });
         },
-        putExhibit: function (request, response, next) {
-            ExhibitService.update(request.params.id).then(function (data) {
+        putDocent: function (request, response, next) {
+            DocentService.update(request.params.id).then(function (data) {
                 response.json(data);
             }).catch(function (error) {
                 utils.parseError(response, error);
