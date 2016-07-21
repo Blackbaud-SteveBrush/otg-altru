@@ -8,3 +8,4 @@ tmp
 *.env
 .sass-cache
 *.log
+build
