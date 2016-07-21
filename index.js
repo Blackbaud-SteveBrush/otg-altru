@@ -17,7 +17,8 @@
         port,
         routes,
         schedule,
-        server;
+        server,
+        session;
 
     fs = require('fs');
     express = require('express');
@@ -28,6 +29,7 @@
     Database = require('./server/database/classes/Database');
     routes = require('./server/routes');
     handlebars  = require('express-handlebars');
+    session = require('express-session');
     path = require('path');
     http = require('http');
 
@@ -48,6 +50,12 @@
     }));
 
     app.use(bodyParser.json());
+    app.use(session({
+        secret: '1234567890QWERTY',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: true }
+    }));
     app.use(favicon(__dirname + '/build/images/favicon.ico'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
@@ -57,14 +65,20 @@
 
     // Docents
     app.delete('/api/docents/:id', routes.api.docent.deleteDocent);
-    app.get('/api/docents/:id', routes.api.docent.getDocent);
+    app.get('/api/docents/:id',
+        routes.api.docent.addVisit,
+        routes.api.docent.getDocent
+    );
     app.get('/api/docents', routes.api.docent.getDocents);
     app.post('/api/docents', routes.api.docent.postDocent);
     app.put('/api/docents/:id', routes.api.docent.putDocent);
 
     // Exhibits
     app.delete('/api/exhibits/:id', routes.api.exhibit.deleteExhibit);
-    app.get('/api/exhibits/:id', routes.api.exhibit.getExhibit);
+    app.get('/api/exhibits/:id',
+        routes.api.exhibit.addVisit,
+        routes.api.exhibit.getExhibit
+    );
     app.get('/api/exhibits', routes.api.exhibit.getExhibits);
     app.post('/api/exhibits', routes.api.exhibit.postExhibit);
     app.put('/api/exhibits/:id', routes.api.exhibit.putExhibit);

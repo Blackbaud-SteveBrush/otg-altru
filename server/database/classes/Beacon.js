@@ -21,43 +21,43 @@
         }
 
         self.create = function (data) {
-            settings.model.create(data);
+            return settings.model.create(data);
         };
 
         self.deleteOne = function (id) {
-            settings.model.findOneAndRemove({
+            return settings.model.findOneAndRemove({
                 UID: UID
             });
         };
 
         self.findAll = function () {
-            settings.model.find({
+            return settings.model.find({
                 beaconType: settings.beaconType
             }).exec();
         };
 
         self.findOneById = function (id) {
-            settings.model.findOne({
+            return settings.model.findOne({
                 _id: id
             }).exec();
         };
 
         self.findOneByUID = function (UID) {
-            settings.model.findOne({
+            return settings.model.findOne({
                 UID: UID
             }).exec();
         };
 
         self.updateOne = function (id, data) {
             var k;
-            self.findOneById(id)
+            return self.findOneById(id)
                 .success(function (model){
                     for (k in data) {
                         if (data.hasOwnProperty(k)) {
                             model[k] = data[k];
                         }
                     }
-                    model.save();
+                    return model.save();
                 })
                 .catch(function (error){
                     return error;

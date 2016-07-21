@@ -8,6 +8,18 @@
     utils = require('../../libs/utils');
 
     module.exports = {
+        addVisit: function (request, response, next) {
+            ExhibitService.findOneById(request.params.id).then(function (doc) {
+                doc.visits.push({
+                    sessionId: request.session.id
+                });
+                doc.save(function () {
+                    next();
+                });
+            }).catch(function (error) {
+                utils.parseError(response, error);
+            });
+        },
         deleteExhibit: function (request, response, next) {
             ExhibitService.deleteOne(request.params.id).then(function (data) {
                 response.json({
@@ -18,6 +30,7 @@
             });
         },
         getExhibit: function (request, response, next) {
+            console.log(request.params.id);
             ExhibitService.findOneById(request.params.id).then(function (data) {
                 response.json(data);
             }).catch(function (error) {

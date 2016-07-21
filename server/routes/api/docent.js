@@ -8,6 +8,15 @@
     utils = require('../../libs/utils');
 
     module.exports = {
+        addVisit: function (request, response, next) {
+            console.log(request);
+            DocentService.findOneById(request.params.id).then(function (doc) {
+                doc.visits.push({
+                    sessionId: 'abc123'
+                });
+                next();
+            });
+        },
         deleteDocent: function (request, response, next) {
             DocentService.deleteOne(request.params.id).then(function (data) {
                 response.json({
