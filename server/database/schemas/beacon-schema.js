@@ -1,29 +1,44 @@
 (function() {
     'use strict';
 
-    var mongoose;
+    var mongoose,
+        slug,
+        visitSchema;
 
     mongoose = require('mongoose');
+    slug = require('mongoose-slug-generator');
+    visitSchema = require(__dirname + '/visit-schema');
+
+    mongoose.plugin(slug);
 
     module.exports = new mongoose.Schema({
-        beaconUUID: {
+        UID: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         beaconType: {
             type: String,
             required: true,
-            default: 'exhibit'
+            default: 'exhibit',
+            lowercase: true
         },
+        description: String,
         name: {
             type: String,
+            required: true,
             trim: true
         },
-        url: {
+        slug: {
             type: String,
-            required: true
-        }
+            slug: 'name',
+            slug_padding_size: 1,
+            unique_slug: true
+        },
+        visits: [visitSchema]
     }, {
-        collection: 'Beacon'
+        collection: 'Beacon',
+        _id: false,
+        discriminatorKey: 'beaconType'
     });
 }());
