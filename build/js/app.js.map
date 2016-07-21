@@ -1,0 +1,21 @@
+{
+  "version": 3,
+  "file": "app.js",
+  "sources": [
+    "public/app/app.js",
+    "public/app/views/exhibit/exhibit.js",
+    "public/app/views/exhibits/exhibits.js",
+    "public/app/views/home/home.js",
+    "tmp/templates.js"
+  ],
+  "names": [],
+  "mappings": "AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;A;ACrCA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;A;ACPA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;A;ACPA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;A;ACPA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;A",
+  "sourceRoot": "../..",
+  "sourcesContent": [
+    "(function (angular) {\n    'use strict';\n\n    function ConfigRoutes($stateProvider, $urlRouterProvider) {\n\n        $urlRouterProvider\n            .when('', '/')\n            .otherwise('/');\n\n        $stateProvider\n            .state('home', {\n                url: '/',\n                templateUrl: '../public/app/views/home/home.html',\n                controller: 'HomeController as homeCtrl'\n            })\n            .state('exhibits', {\n                url: '/exhibits',\n                templateUrl: '../public/app/views/exhibits/exhibits.html',\n                controller: 'ExhibitsController as exhibitsCtrl'\n            })\n            .state('exhibit', {\n                url: '/exhibits/:slug',\n                templateUrl: '../public/app/views/exhibit/exhibit.html',\n                controller: 'ExhibitController as exhibitCtrl'\n            });\n    }\n\n    ConfigRoutes.$inject = [\n        '$stateProvider',\n        '$urlRouterProvider'\n    ];\n\n    angular.module('sky-beacons', [\n        'ui.router',\n        'sky-beacons.templates'\n    ])\n        .config(ConfigRoutes);\n}(window.angular));\n",
+    "(function (angular) {\n    'use strict';\n\n    function ExhibitController() {}\n\n    angular.module('sky-beacons')\n        .controller('ExhibitController', ExhibitController);\n}(window.angular));\n",
+    "(function (angular) {\n    'use strict';\n\n    function ExhibitsController() {}\n\n    angular.module('sky-beacons')\n        .controller('ExhibitsController', ExhibitsController);\n}(window.angular));\n",
+    "(function (angular) {\n    'use strict';\n\n    function HomeController() {}\n\n    angular.module('sky-beacons')\n        .controller('HomeController', HomeController);\n}(window.angular));\n",
+    "angular.module('sky-beacons.templates', []).run(['$templateCache', function($templateCache) {\n    $templateCache.put('../public/app/views/exhibit/exhibit.html',\n        'Hello, World!');\n    $templateCache.put('../public/app/views/exhibits/exhibits.html',\n        'Hello, World!');\n    $templateCache.put('../public/app/views/home/home.html',\n        'Home Page');\n}]);\n"
+  ]
+}
