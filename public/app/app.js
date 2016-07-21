@@ -23,6 +23,18 @@
                 templateUrl: '../public/app/views/exhibit/exhibit.html',
                 controller: 'ExhibitController as exhibitCtrl'
             });
+
+        $stateProvider
+            .state('admin', {
+                abstract: true,
+                url: '/admin',
+                template: '<ui-view />'
+            })
+            .state('admin.beacons', {
+                url: '/beacons',
+                templateUrl: '../public/app/views/admin/beacons/beacons.html',
+                controller: 'BeaconsListController as beaconsCtrl'
+            });
     }
 
     ConfigRoutes.$inject = [
