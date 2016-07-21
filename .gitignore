@@ -1,6 +1,7 @@
 azure.err
 *.publishsettings
 bower_components
+build
 node_modules
 tmp
 .DS_Store
