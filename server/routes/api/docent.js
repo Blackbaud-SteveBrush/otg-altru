@@ -4,7 +4,7 @@
     var DocentService,
         utils;
 
-    DocentService = require('../../database/services/docent');
+    DocentService = require('../../database/services/person');
     utils = require('../../libs/utils');
 
     module.exports = {
