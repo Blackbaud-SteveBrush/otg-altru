@@ -1,1 +1,27 @@
-Hello, Worlds!
+<div>
+  <bb-carousel bb-carousel-style="card-large">
+    <bb-carousel-item ng-repeat="beacon in beaconsCtrl.beacons">
+      <bb-card bb-card-size="large">
+        <bb-card-title>{{beacon.name}}</bb-card-title>
+        <bb-card-content>
+          <div class="bb-emphasized">
+              ID
+          </div>
+          {{beacon.UID}}
+          <div class="bb-emphasized" style="margin-top: 10px;">
+              Type
+          </div>
+          {{beacon.type}}
+          <div class="bb-emphasized" style="margin-top: 10px;">
+              Description
+          </div>
+          {{beacon.description}}
+        </bb-card-content>
+        <bb-card-actions>
+          <button type="button" class="btn btn-default" ui-sref="admin.exhibits({slug:beacon.slug})">More information</button>
+          <button type="button" class="btn btn-primary" style="background-color: #C61C1C;border-color: #A71818;">Delete</button>
+        </bb-card-actions>
+      </bb-card>
+    </bb-carousel-item>
+  </bb-carousel>
+</div>

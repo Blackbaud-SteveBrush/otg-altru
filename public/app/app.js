@@ -34,6 +34,11 @@
                 url: '/beacons',
                 templateUrl: '../public/app/views/admin/beacons/beacons.html',
                 controller: 'BeaconsListController as beaconsCtrl'
+            })
+            .state('admin.exhibits', {
+                url: '/exhibits/:slug',
+                templateUrl: '../public/app/views/admin/exhibits/exhibits.html',
+                controller: 'ExhibitsListController as exhibitsCtrl'
             });
     }
 
@@ -44,6 +49,8 @@
 
     angular.module('sky-beacons', [
         'ui.router',
+        'sky', 
+        'ui.bootstrap',
         'sky-beacons.templates'
     ])
         .config(ConfigRoutes);
