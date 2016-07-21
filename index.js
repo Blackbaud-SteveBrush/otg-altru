@@ -28,7 +28,7 @@
     Database = require('./server/database/classes/Database');
     routes = require('./server/routes');
     handlebars  = require('express-handlebars');
-    path = require("path");
+    path = require('path');
     http = require('http');
 
     port = process.env.PORT || '3000';
@@ -53,8 +53,21 @@
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'build')));
 
-    // Content pages.
     app.get('/', routes.index);
+
+    // Docents
+    app.delete('/api/docents/:id', routes.api.docent.deleteDocent);
+    app.get('/api/docents/:id', routes.api.docent.getDocent);
+    app.get('/api/docents', routes.api.docent.getDocents);
+    app.post('/api/docents', routes.api.docent.postDocent);
+    app.put('/api/docents/:id', routes.api.docent.putDocent);
+
+    // Exhibits
+    app.delete('/api/exhibits/:id', routes.api.exhibit.deleteExhibit);
+    app.get('/api/exhibits/:id', routes.api.exhibit.getExhibit);
+    app.get('/api/exhibits', routes.api.exhibit.getExhibits);
+    app.post('/api/exhibits', routes.api.exhibit.postExhibit);
+    app.put('/api/exhibits/:id', routes.api.exhibit.putExhibit);
 
     // Catch 404 and forward to error handler
     app.use(function (req, res, next) {

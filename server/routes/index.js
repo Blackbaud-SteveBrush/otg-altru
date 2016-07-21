@@ -17,6 +17,7 @@
     };
 
     routes.api = {
+        docent: require(__dirname + '/api/docent.js'),
         exhibit: require(__dirname + '/api/exhibit.js')
     };
 
