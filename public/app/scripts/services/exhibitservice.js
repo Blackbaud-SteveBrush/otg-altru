@@ -31,7 +31,7 @@
             }).then(function (res) {
                 deferred.resolve(res.data);
             });
-            
+
             return deferred.promise;
         };
 
@@ -79,4 +79,4 @@
     angular.module('sky-beacons')
         .service('ExhibitService', ExhibitService);
 
-}(window.angular))
+}(window.angular));

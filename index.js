@@ -67,6 +67,7 @@
 
     // Beacons
     app.get('/api/beacons/:uid', routes.api.beacon.getBeacon);
+    app.get('/api/beacons', routes.api.beacon.getBeacons);
 
     // Docents
     app.delete('/api/docents/:id', routes.api.docent.deleteDocent);
