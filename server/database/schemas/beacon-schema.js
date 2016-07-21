@@ -2,10 +2,12 @@
     'use strict';
 
     var mongoose,
+        pieceSchema,
         slug,
         visitSchema;
 
     mongoose = require('mongoose');
+    pieceSchema = require(__dirname + '/piece-schema');
     slug = require('mongoose-slug-generator');
     visitSchema = require(__dirname + '/visit-schema');
 
@@ -24,6 +26,10 @@
             lowercase: true
         },
         description: String,
+        image: {
+            fileName: String,
+            data: String
+        },
         name: {
             type: String,
             required: true,
@@ -38,7 +44,6 @@
         visits: [visitSchema]
     }, {
         collection: 'Beacon',
-        _id: false,
         discriminatorKey: 'beaconType'
     });
 }());

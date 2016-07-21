@@ -20,32 +20,48 @@
             throw new Error("The attribute `model` is required when instantiating the Beacon class!");
         }
 
-        self.create = function (requestBody) {
-            settings.model
+        self.create = function (data) {
+            settings.model.create(data);
         };
 
-        self.deleteOne = function (deliverableId) {
-            settings.model
+        self.deleteOne = function (id) {
+            settings.model.findOneAndRemove({
+                UID: UID
+            });
         };
 
-        self.findAll = function (callback) {
-            settings.model
+        self.findAll = function () {
+            settings.model.find({
+                beaconType: settings.beaconType
+            }).exec();
         };
 
-        self.findOneById = function (deliverableId) {
-            settings.model
+        self.findOneById = function (id) {
+            settings.model.findOne({
+                _id: id
+            }).exec();
         };
 
-        self.findOneBySlug = function (slug) {
-            settings.model
+        self.findOneByUID = function (UID) {
+            settings.model.findOne({
+                UID: UID
+            }).exec();
         };
 
-        self.save = function(model) {
-
-        };
-
-        self.updateOne = function (deliverableId, data) {
-            self.findOneById(deliverableId, function (error, model) {
+        self.updateOne = function (id, data) {
+            var k;
+            self.findOneById(id)
+                .success(function (model){
+                    for (k in data) {
+                        if (data.hasOwnProperty(k)) {
+                            model[k] = data[k];
+                        }
+                    }
+                    model.save();
+                })
+                .catch(function (error){
+                    return error;
+                });
         };
     }
 
