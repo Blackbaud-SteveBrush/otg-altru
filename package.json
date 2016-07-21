@@ -4,7 +4,8 @@
   "description": "Step 1) Provision Beacons - Register beacons with manufacturer - Attach beacons to Google Developer Project using Beacon Tools iPhone application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./scripts/start.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,14 @@
   "bugs": {
     "url": "https://github.com/Blackbaud-SteveBrush/otg-beacons/issues"
   },
-  "homepage": "https://github.com/Blackbaud-SteveBrush/otg-beacons#readme"
+  "homepage": "https://github.com/Blackbaud-SteveBrush/otg-beacons#readme",
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "grunt": "^0.4.5",
+    "serve-favicon": "^2.3.0"
+  }
 }

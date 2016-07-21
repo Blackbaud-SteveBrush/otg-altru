@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://sky.blackbaudcdn.net/skyux/1.6.2/css/sky-bundle.css">
+    <!-- <link rel="stylesheet" href="/libs/sky/sky-bundle.css"> -->
+    <link rel="stylesheet" href="/css/app.min.css">
+  </head>
+  <body ng-app="{{ angularApp }}" ng-cloak>
+    <div ng-controller="AppController as appCtrl" class="page">
+      <bb-omnibar></bb-omnibar>
+      <header id="header" class="navbar navbar-inverse bb-navbar">
+        <div class="container">
+          <ul class="nav navbar-nav navbar-left">
+            <li ui-sref-active="bb-navbar-active">
+              <a href ui-sref="home">Home</a>
+            </li>
+          </ul>
+        </div>
+      </header>
+      <div id="content">
+        <ui-view></ui-view>
+      </div>
+      <footer id="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              Footer Left
+            </div>
+            <div class="col-sm-6">
+              Footer Right
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- <script src="/libs/sky/sky-bundle.min.js"></script> -->
+    <script src="https://sky.blackbaudcdn.net/skyux/1.6.2/js/sky-bundle.min.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>
