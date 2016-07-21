@@ -1,2 +1,2 @@
-DATABASE_URI=mongodb://localhost:27017/capabilities-catalog
+DATABASE_URI=mongodb://localhost:27017/sky-beacons
 PORT=5000
