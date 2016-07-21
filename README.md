@@ -3,3 +3,7 @@
 Step 1) Provision Beacons
 - Register beacons with manufacturer
 - Attach beacons to Google Developer Project using Beacon Tools iPhone application
+
+
+
+:)
