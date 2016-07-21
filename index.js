@@ -63,22 +63,19 @@
 
     app.get('/', routes.index);
 
+    // Beacons
+    app.get('/api/beacons/:uid', routes.api.beacon.getBeacon);
+
     // Docents
     app.delete('/api/docents/:id', routes.api.docent.deleteDocent);
-    app.get('/api/docents/:id',
-        routes.api.docent.addVisit,
-        routes.api.docent.getDocent
-    );
+    app.get('/api/docents/:id', routes.api.docent.getDocent);
     app.get('/api/docents', routes.api.docent.getDocents);
     app.post('/api/docents', routes.api.docent.postDocent);
     app.put('/api/docents/:id', routes.api.docent.putDocent);
 
     // Exhibits
     app.delete('/api/exhibits/:id', routes.api.exhibit.deleteExhibit);
-    app.get('/api/exhibits/:id',
-        routes.api.exhibit.addVisit,
-        routes.api.exhibit.getExhibit
-    );
+    app.get('/api/exhibits/:id', routes.api.exhibit.getExhibit);
     app.get('/api/exhibits', routes.api.exhibit.getExhibits);
     app.post('/api/exhibits', routes.api.exhibit.postExhibit);
     app.put('/api/exhibits/:id', routes.api.exhibit.putExhibit);

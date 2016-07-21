@@ -8,7 +8,6 @@
     };
 
     routes.index = function (req, res, next) {
-        console.log("Hello");
         res.render('home', {
             angularApp: 'sky-beacons',
             layout: 'main',
@@ -17,6 +16,7 @@
     };
 
     routes.api = {
+        beacon: require(__dirname + '/api/beacon.js'),
         docent: require(__dirname + '/api/docent.js'),
         exhibit: require(__dirname + '/api/exhibit.js')
     };
