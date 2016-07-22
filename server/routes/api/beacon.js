@@ -29,6 +29,14 @@
             }).catch(function (error) {
                 utils.parseError(response, error);
             });
+        },
+        getBeacons: function (request, response) {
+            BeaconModel.find({}).exec().then(function (data) {
+                response.json({
+                    count: data.length || 0,
+                    value: data
+                });
+            });
         }
     };
 }());
