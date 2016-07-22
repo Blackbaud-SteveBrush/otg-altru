@@ -36,7 +36,7 @@
                 controller: 'BeaconsListController as beaconsCtrl'
             })
             .state('admin.exhibits', {
-                url: '/exhibits/:slug',
+                url: '/exhibits/:id',
                 templateUrl: '../public/app/views/admin/exhibits/exhibits.html',
                 controller: 'ExhibitsListController as exhibitsCtrl'
             })

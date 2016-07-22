@@ -36,7 +36,7 @@
                 controller: 'BeaconsListController as beaconsCtrl'
             })
             .state('admin.exhibits', {
-                url: '/exhibits/:slug',
+                url: '/exhibits/:id',
                 templateUrl: '../public/app/views/admin/exhibits/exhibits.html',
                 controller: 'ExhibitsListController as exhibitsCtrl'
             })
@@ -64,6 +64,30 @@
         'sky-beacons.templates'
     ])
         .config(ConfigRoutes);
+}(window.angular));
+
+(function (angular) {
+    'use strict';
+
+    function BeaconService($http) {
+        var service;
+
+        service = this;
+
+        service.getAll = function () {
+            return $http.get('/api/beacons/').then(function (res) {
+                return res.data;
+            });
+        };
+    }
+
+    BeaconService.$inject = [
+        '$http',
+    ];
+
+    angular.module('sky-beacons')
+        .service('BeaconService', BeaconService);
+
 }(window.angular));
 
 (function (angular) {
@@ -176,41 +200,19 @@
 (function (angular) {
     'use strict';
 
-    function BeaconsListController() 
+    function BeaconsListController(BeaconService) 
     {
-        var self = this;
+        var self = this,
+            beacons;
 
-        self.beacons = [
-            {
-                UID: 'asdflkasjdflujaiojzxcv',
-                name: "Beacon 1",
-                type: "exhibit",
-                description: "This beacon does stuff.",
-                slug: "hihihi"
-            },
-            {
-                UID: 'asdflkas33jdflujaiojzxcv',
-                name: "Beacon 2",
-                type: "exhibit",
-                description: "This beacon does stuff. asdfkjasdfklj",
-                slug: "hihihi2"
-            },
-            {
-                UID: 'asdflkas222jdflujaiojzxcv',
-                name: "Beacon 3",
-                type: "exhibit",
-                description: "This beacon does stuff. ewggerwqqwer",
-                slug: "hihihi3"
-            },
-            {
-                UID: 'asdfl111kasjdflujaiojzxcv',
-                name: "Beacon 4",
-                type: "exhibit",
-                description: "This beacon does stuff. asdf asdf df",
-                slug: "hihihi4"
-            }
-        ]
+        BeaconService.getAll().then(function(data) {
+            self.beacons = data.value;    
+        });
     }
+
+    BeaconsListController.$inject = [
+        'BeaconService'
+    ];
 
     angular.module('sky-beacons')
         .controller('BeaconsListController', BeaconsListController);
@@ -310,7 +312,7 @@
 
 angular.module('sky-beacons.templates', []).run(['$templateCache', function($templateCache) {
     $templateCache.put('../public/app/views/admin/beacons/beacons.html',
-        '<div><bb-carousel bb-carousel-style=card-large><bb-carousel-item ng-repeat="beacon in beaconsCtrl.beacons"><bb-card bb-card-size=large><bb-card-title>{{beacon.name}}</bb-card-title><bb-card-content><div class=bb-emphasized>ID</div>{{beacon.UID}}<div class=bb-emphasized style="margin-top: 10px">Type</div>{{beacon.type}}<div class=bb-emphasized style="margin-top: 10px">Description</div>{{beacon.description}}</bb-card-content><bb-card-actions><button type=button class="btn btn-default" ui-sref=admin.exhibits({slug:beacon.slug})>More information</button> <button type=button class="btn btn-primary" style="background-color: #C61C1C;border-color: #A71818">Delete</button></bb-card-actions></bb-card></bb-carousel-item></bb-carousel></div>');
+        '<div><bb-carousel bb-carousel-style=card-large><bb-carousel-item ng-repeat="beacon in beaconsCtrl.beacons"><bb-card bb-card-size=large><bb-card-title>{{beacon.name}}</bb-card-title><bb-card-content><div class=bb-emphasized>ID</div>{{beacon.UID}}<div class=bb-emphasized style="margin-top: 10px">Type</div>{{beacon.beaconType}}<div class=bb-emphasized style="margin-top: 10px">Description</div>{{beacon.description}}</bb-card-content><bb-card-actions><button type=button class="btn btn-default" ui-sref=admin.exhibits({id:beacon._id})>More information</button> <button type=button class="btn btn-primary" style="background-color: #C61C1C;border-color: #A71818">Delete</button></bb-card-actions></bb-card></bb-carousel-item></bb-carousel></div>');
     $templateCache.put('../public/app/views/admin/exhibits/exhibits.html',
         'Hello, World!');
     $templateCache.put('../public/app/views/admin/forms/exhibit/exhibit.html',
