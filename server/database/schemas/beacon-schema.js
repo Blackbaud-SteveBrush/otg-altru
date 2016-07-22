@@ -26,10 +26,7 @@
             lowercase: true
         },
         description: String,
-        image: {
-            fileName: String,
-            data: String
-        },
+        image: String,
         name: {
             type: String,
             required: true,

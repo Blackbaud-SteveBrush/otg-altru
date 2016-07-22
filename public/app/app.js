@@ -19,7 +19,7 @@
                 controller: 'ExhibitsController as exhibitsCtrl'
             })
             .state('exhibit', {
-                url: '/exhibits/:slug',
+                url: '/exhibits/:id',
                 templateUrl: '../public/app/views/exhibit/exhibit.html',
                 controller: 'ExhibitController as exhibitCtrl'
             });
