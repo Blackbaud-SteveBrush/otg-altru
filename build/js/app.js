@@ -625,7 +625,6 @@
         };
 
         processError = function (data) {
-            console.log(data);
             vm.error = data.error.message || data.error.errmsg;
             switch (data.error.code) {
                 case 4:
@@ -638,6 +637,7 @@
         if ($state.params.id) {
             ExhibitService.getById($state.params.id).then(function (data) {
                 vm.formData = data;
+                console.log(data);
                 vm.isReady = true;
             });
         } else {

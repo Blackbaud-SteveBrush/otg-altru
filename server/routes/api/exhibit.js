@@ -42,6 +42,7 @@
             });
         },
         putExhibit: function (request, response, next) {
+            console.log(request.params.id, request.body.data);
             ExhibitService.updateOne(request.params.id, request.body.data).then(function (data) {
                 response.json(data);
             }).catch(function (error) {

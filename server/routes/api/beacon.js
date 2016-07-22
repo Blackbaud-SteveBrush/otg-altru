@@ -18,6 +18,9 @@
                 case 'exhibit':
                     url += 'exhibits/';
                 break;
+                case 'person':
+                    url += 'docents/';
+                break;
                 }
                 url += data._id;
                 data.visits.push({
