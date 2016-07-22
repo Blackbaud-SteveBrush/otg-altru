@@ -11,6 +11,7 @@
         };
 
         processError = function (data) {
+            console.log(data);
             vm.error = data.error.message || data.error.errmsg;
             switch (data.error.code) {
                 case 4:
@@ -45,22 +46,20 @@
             vm.scrollToTop = false;
             if (vm.formData._id) {
                 ExhibitService.edit(vm.formData).then(function (data) {
-                    if (data.success) {
-                        vm.success = 'Exhibit successfully updated.';
-                        vm.formData = data;
-                    } else {
-                        processError(data);
+                    if (data.error) {
+                        return processError(data);
                     }
+                    vm.success = 'Exhibit successfully updated.';
+                    vm.formData = data;
                     vm.scrollToTop = true;
                 });
             } else {
                 ExhibitService.add(vm.formData).then(function (data) {
-                    if (data.success) {
-                        vm.success = 'Exhibit successfully created.';
-                        vm.formData = data;
-                    } else {
-                        processError(data);
+                    if (data.error) {
+                        return processError(data);
                     }
+                    vm.success = 'Exhibit successfully created.';
+                    vm.formData = data;
                     vm.scrollToTop = true;
                 });
             }
