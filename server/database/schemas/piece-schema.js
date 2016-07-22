@@ -7,11 +7,8 @@
 
   module.exports = new mongoose.Schema({
       description: String,
-      image: {
-          fileName: String,
-          data: String
-      },
-      links: [String],
+      image: String,
+      link: String,
       name: String
   });
 }());

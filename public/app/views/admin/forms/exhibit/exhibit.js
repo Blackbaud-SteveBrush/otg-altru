@@ -30,6 +30,13 @@
             vm.isReady = true;
         }
 
+        vm.addPiece = function () {
+            if (!vm.formData.pieces) {
+                vm.formData.pieces = [];
+            }
+            vm.formData.pieces.push({});
+        };
+
         vm.delete = function () {
             ExhibitService.deleteById(vm.formData._id).then(function (data) {
                 if (data.success) {
@@ -38,6 +45,10 @@
                     processError(data);
                 }
             });
+        };
+
+        vm.removePiece = function (index) {
+             vm.formData.pieces.splice(index, 1);
         };
 
         vm.submit = function () {
