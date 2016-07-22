@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    function AnalyticsController($stateParams, ExhibitService, $state) {
+    function AnalyticsController($stateParams, BeaconService, $state) {
         var self = this;
 
         function uniqueSessionsBetweenDates(data, startDate, endDate) {
@@ -74,7 +74,7 @@
             });
         }
 
-        ExhibitService.getAll().then(function(data) {
+        BeaconService.getAll().then(function(data) {
             var i;
 
             self.beacons = data.value;
@@ -88,7 +88,7 @@
 
     AnalyticsController.$inject = [
         '$stateParams',
-        'ExhibitService',
+        'BeaconService',
         '$state'
     ];
 

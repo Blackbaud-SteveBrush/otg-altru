@@ -1,6 +1,8 @@
 <div>
     <div ng-repeat="beacon in analyticsCtrl.beacons">
-        <h2 style="margin: 0 20px;">{{beacon.name}}</h2>
+        <a href="#">
+            <h2 style="margin: 0 20px;" ui-sref="admin.beaconPage({id: beacon._id})">{{beacon.name}}</h2>
+        </a>
         <bb-carousel bb-carousel-style="card-small">
             <bb-carousel-item ng-repeat="card in beacon.cards">
             <bb-card bb-card-size="small">
