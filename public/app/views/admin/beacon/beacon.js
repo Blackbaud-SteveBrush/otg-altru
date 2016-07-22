@@ -12,7 +12,7 @@
             i = data.length;
             while (i--) {
                 visit = data[i]; 
-                if (visit.date_indate >= startDate && visit.date_indate >= startDate && sessionIds.indexOf(visit.sessionId) < 0) {
+                if (visit.date_indate >= startDate && visit.date_indate <= endDate && sessionIds.indexOf(visit.sessionId) < 0) {
                     sessionIds.push(visit.sessionId);
                 }
             }
