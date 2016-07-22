@@ -398,7 +398,7 @@
 (function (angular) {
     'use strict';
 
-    function BeaconController($stateParams, ExhibitService, $state) {
+    function BeaconController($stateParams, ExhibitService, DocentService, $state) {
         var self = this;
 
         function uniqueSessionsBetweenDates(data, startDate, endDate) {
@@ -472,9 +472,21 @@
         }
 
         ExhibitService.getById($stateParams.id).then(function(data) {
-            self.beacon = data;
+            if (data != null) {
+                self.beacon = data;
+                self.beacon.beaconType = "exhibit";
 
-            buildCards();
+                buildCards();
+            }
+        });
+
+        DocentService.getById($stateParams.id).then(function(data) {
+            if (data != null) {
+                self.beacon = data;
+                self.beacon.beaconType = "docent";
+
+                buildCards();
+            }
         });
 
         self.goToEdit = function (beacon) {
@@ -492,6 +504,7 @@
     BeaconController.$inject = [
         '$stateParams',
         'ExhibitService',
+        'DocentService',
         '$state'
     ];
 
