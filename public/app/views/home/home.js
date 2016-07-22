@@ -7,7 +7,7 @@
         vm = this;
 
         DocentService.getAll().then(function (data) {
-            vm.docents = data;
+            vm.docents = data.value;
         });
 
         ExhibitService.getAll().then(function (data) {
