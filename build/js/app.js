@@ -364,12 +364,12 @@
 
             beacon.cards.push({
                 title: 'Visitors Last 7 Days',
-                count: uniqueSessionsBetweenDates(beacon.visits,  addDays(todayStart, -7), todayStart)
+                count: uniqueSessionsBetweenDates(beacon.visits,  addDays(today, -7), today)
             });
 
             beacon.cards.push({
                 title: 'Visitors Last 30 Days',
-                count: uniqueSessionsBetweenDates(beacon.visits, addDays(todayStart, -30), todayStart)
+                count: uniqueSessionsBetweenDates(beacon.visits, addDays(today, -30), today)
             });
         }
 
@@ -462,12 +462,12 @@
 
             self.cards.push({
                 title: 'Visitors Last 7 Days',
-                count: uniqueSessionsBetweenDates(self.beacon.visits,  addDays(todayStart, -7), todayStart)
+                count: uniqueSessionsBetweenDates(self.beacon.visits,  addDays(today, -7), today)
             });
 
             self.cards.push({
                 title: 'Visitors Last 30 Days',
-                count: uniqueSessionsBetweenDates(self.beacon.visits, addDays(todayStart, -30), todayStart)
+                count: uniqueSessionsBetweenDates(self.beacon.visits, addDays(today, -30), today)
             });
         }
 
