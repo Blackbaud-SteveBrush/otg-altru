@@ -1,4 +1,4 @@
-<div>
+<div class="container">
   <bb-carousel bb-carousel-style="card-large">
     <bb-carousel-item ng-repeat="beacon in beaconsCtrl.beacons">
       <bb-card bb-card-size="large">
@@ -24,11 +24,10 @@
       </bb-card>
     </bb-carousel-item>
   </bb-carousel>
+  <p>
+    <a ui-sref="admin.forms.exhibit()">Create Exhibit</a>
+  </p>
+  <p>
+    <a ui-sref="admin.forms.docent()">Create Docent</a>
+  </p>
 </div>
-
-<p>
-  <a ui-sref="admin.forms.exhibit()">Create Exhibit</a>
-</p>
-<p>
-  <a ui-sref="admin.forms.docent()">Create Docent</a>
-</p>

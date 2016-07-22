@@ -42,7 +42,7 @@
             });
         },
         putDocent: function (request, response, next) {
-            DocentService.update(request.params.id).then(function (data) {
+            DocentService.update(request.params.id, request.body.data).then(function (data) {
                 response.json(data);
             }).catch(function (error) {
                 utils.parseError(response, error);

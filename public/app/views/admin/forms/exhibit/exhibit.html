@@ -49,55 +49,55 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane active" id="tab-pieces">
+          <div class="tab-pane" id="tab-pieces">
             <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  Pieces:
-                </label>
-                <div class="col-sm-10">
-                  <div ng-repeat="piece in formCtrl.formData.pieces" class="form-group-list-item">
-                    <div class="row">
-                      <div class="col-sm-10">
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label>Name:</label>
-                              <input class="form-control" type="text" ng-model="piece.name">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label>Description:</label>
-                              <textarea class="form-control" type="text" ng-model="piece.description"></textarea>
-                            </div>
+              <label class="col-sm-2 control-label">
+                Pieces:
+              </label>
+              <div class="col-sm-10">
+                <div ng-repeat="piece in formCtrl.formData.pieces" class="form-group-list-item">
+                  <div class="row">
+                    <div class="col-sm-10">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label>Name:</label>
+                            <input class="form-control" type="text" ng-model="piece.name">
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label>Full URL:</label>
-                              <input class="form-control" type="text" ng-model="piece.link" placeholder="http://">
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label>Image URL:</label>
-                              <input class="form-control" type="text" ng-model="piece.image" placeholder="http://">
-                            </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label>Description:</label>
+                            <textarea class="form-control" type="text" ng-model="piece.description"></textarea>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-2">
-                        <div class="form-group">
-                          <label>&nbsp;</label>
-                          <button type="button" class="btn btn-default btn-sm btn-block" ng-click="formCtrl.removePiece($index)"><i class="fa fa-minus"></i>Remove</button>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label>Full URL:</label>
+                            <input class="form-control" type="text" ng-model="piece.link" placeholder="http://">
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label>Image URL:</label>
+                            <input class="form-control" type="text" ng-model="piece.image" placeholder="http://">
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button type="button" class="btn btn-default btn-sm btn-block" ng-click="formCtrl.removePiece($index)"><i class="fa fa-minus"></i>Remove</button>
+                      </div>
+                    </div>
                   </div>
-                  <button type="button" class="btn btn-link" ng-click="formCtrl.addPiece()"><i class="fa fa-plus"></i> Add Piece</button>
                 </div>
+                <button type="button" class="btn btn-link" ng-click="formCtrl.addPiece()"><i class="fa fa-plus"></i> Add Piece</button>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -108,5 +108,4 @@
       </div>
     </div>
   </form>
-  <pre>{{ formCtrl.formData | json }}</pre>
 </div>

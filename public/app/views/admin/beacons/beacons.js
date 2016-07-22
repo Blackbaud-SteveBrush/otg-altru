@@ -11,7 +11,7 @@
 
         self.goToEdit = function (beacon) {
             switch (beacon.beaconType) {
-            case 'docent':
+            case 'person':
                 $state.go('admin.forms.docent', { id: beacon._id });
                 break;
             case 'exhibit':
