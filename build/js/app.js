@@ -22,6 +22,11 @@
                 url: '/exhibits/:id',
                 templateUrl: '../public/app/views/exhibit/exhibit.html',
                 controller: 'ExhibitController as exhibitCtrl'
+            })
+            .state('docent', {
+                url: '/docents/:id',
+                templateUrl: '../public/app/views/docent/docent.html',
+                controller: 'DocentController as docentCtrl'
             });
 
         $stateProvider
@@ -92,6 +97,90 @@
 
     angular.module('sky-beacons')
         .service('BeaconService', BeaconService);
+
+}(window.angular));
+
+(function (angular) {
+    'use strict';
+
+    function DocentService($http, $q) {
+        var service;
+
+        service = this;
+
+        service.getAll = function () {
+            return $http.get('/api/docents/').then(function (res) {
+                return res.data;
+            });
+        };
+
+        service.getById = function (id) {
+            return $http.get('/api/docents/' + id).then(function (res) {
+                return res.data;
+            });
+        };
+
+        service.deleteById = function (id) {
+            var deferred;
+            deferred = $q.defer();
+
+            $http({
+                method: 'DELETE',
+                url: '/api/docents/' + id,
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            }).then(function (res) {
+                deferred.resolve(res.data);
+            });
+
+            return deferred.promise;
+        };
+
+        service.add = function (data) {
+            var deferred = $q.defer();
+
+            $http.post('/api/docents/', {
+                data : data,
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(function (res) {
+                if (res.data.error) {
+                    deferred.resolve(res.data);
+                } else {
+                    deferred.resolve(res.data);
+                }
+            });
+
+            return deferred.promise;
+        };
+
+        service.edit = function (data) {
+            var deferred;
+            deferred = $q.defer();
+
+            $http.put('/api/docents/' + data._id, {
+                data: data
+            }).then(function (res) {
+                if (res.data.error) {
+                    deferred.resolve(res.data);
+                } else {
+                    deferred.resolve(res.data);
+                }
+            });
+
+            return deferred.promise;
+        };
+    }
+
+    DocentService.$inject = [
+        '$http',
+        '$q'
+    ];
+
+    angular.module('sky-beacons')
+        .service('DocentService', DocentService);
 
 }(window.angular));
 
@@ -423,6 +512,28 @@
 (function (angular) {
     'use strict';
 
+    function DocentController(DocentService, $stateParams) {
+        var vm;
+
+        vm = this;
+
+        DocentService.getById($stateParams.id).then(function (data) {
+            vm.docent = data;
+        });
+    }
+
+    DocentController.$inject = [
+        'DocentService',
+        '$stateParams'
+    ];
+
+    angular.module('sky-beacons')
+        .controller('DocentController', DocentController);
+}(window.angular));
+
+(function (angular) {
+    'use strict';
+
     function ExhibitController(ExhibitService, $stateParams) {
         var vm;
 
@@ -454,14 +565,14 @@
 (function (angular) {
     'use strict';
 
-    function HomeController(ExhibitService) {
+    function HomeController(DocentService, ExhibitService) {
         var vm;
 
         vm = this;
 
-        // DocentService.getAll().then(function (data) {
-        //     vm.docents = data;
-        // });
+        DocentService.getAll().then(function (data) {
+            vm.docents = data.value;
+        });
 
         ExhibitService.getAll().then(function (data) {
             vm.exhibits = data.value;
@@ -470,6 +581,7 @@
     }
 
     HomeController.$inject = [
+        'DocentService',
         'ExhibitService'
     ];
 
@@ -486,12 +598,14 @@ angular.module('sky-beacons.templates', []).run(['$templateCache', function($tem
         '<div class=container ng-if=::formCtrl.isReady><div class=page-header bb-scroll-into-view=formCtrl.scrollToTop><h1 ng-if=formCtrl.formData._id>Edit {{ formCtrl.formData.name }}</h1><h1 ng-if=!formCtrl.formData._id>Add Docent</h1></div><div ng-if=formCtrl.success class="alert alert-success" ng-bind-html=formCtrl.trustHtml(formCtrl.success)></div><div ng-if=formCtrl.error class="alert alert-danger"><p ng-bind-html=formCtrl.trustHtml(formCtrl.error)></p></div><form name=docentForm class=form-horizontal ng-submit=formCtrl.submit() novalidate><div class=row><div class=col-sm-10><ul class="nav nav-tabs"><li role=presentation class=active><a href=#tab-details target=_self data-toggle=tab>Details</a></li><li role=presentation><a href=#tab-pieces target=_self data-toggle=tab>Pieces</a></li></ul><div class=tab-content><div class="tab-pane active" id=tab-details><div class=form-group><label class="col-sm-2 control-label">Name:</label><div class=col-sm-10><input class=form-control name=name ng-model=formCtrl.formData.name></div></div><div class=form-group><label class="col-sm-2 control-label">Beacon UID:</label><div class=col-sm-10><input class=form-control name=UID ng-model=formCtrl.formData.UID></div></div><div class=form-group><label class="col-sm-2 control-label">Title:</label><div class=col-sm-10><input class=form-control name=title ng-model=formCtrl.formData.title></div></div><div class=form-group><label class="col-sm-2 control-label">Bio:</label><div class=col-sm-10><textarea class=form-control name=description ng-model=formCtrl.formData.description></textarea></div></div></div><div class="tab-pane active" id=tab-pieces></div></div></div><div class=col-sm-2><button ng-if=formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=docentForm.$invalid><i class="fa fa-save"></i>Save</button> <button ng-if=!formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=docentForm.$invalid><i class="fa fa-plus"></i>Create</button> <button ng-if=formCtrl.formData._id class="btn btn-danger btn-block" type=button cc-confirm-click data-confirmed-click=formCtrl.delete()><i class="fa fa-trash"></i>Delete</button></div></div></form><pre>{{ formCtrl.formData | json }}</pre></div>');
     $templateCache.put('../public/app/views/admin/forms/exhibit/exhibit.html',
         '<div class=container ng-if=::formCtrl.isReady><div class=page-header bb-scroll-into-view=formCtrl.scrollToTop><h1 ng-if=formCtrl.formData._id>Edit {{ formCtrl.formData.name }}</h1><h1 ng-if=!formCtrl.formData._id>Add Exhibit</h1></div><div ng-if=formCtrl.success class="alert alert-success" ng-bind-html=formCtrl.trustHtml(formCtrl.success)></div><div ng-if=formCtrl.error class="alert alert-danger"><p ng-bind-html=formCtrl.trustHtml(formCtrl.error)></p></div><form name=exhibitForm class=form-horizontal ng-submit=formCtrl.submit() novalidate><div class=row><div class=col-sm-10><ul class="nav nav-tabs"><li role=presentation class=active><a href=#tab-details target=_self data-toggle=tab>Details</a></li><li role=presentation><a href=#tab-pieces target=_self data-toggle=tab>Pieces</a></li></ul><div class=tab-content><div class="tab-pane active" id=tab-details><div class=form-group><label class="col-sm-2 control-label">Name:</label><div class=col-sm-10><input class=form-control name=name ng-model=formCtrl.formData.name></div></div><div class=form-group><label class="col-sm-2 control-label">Beacon UID:</label><div class=col-sm-10><input class=form-control name=UID ng-model=formCtrl.formData.UID></div></div><div class=form-group><label class="col-sm-2 control-label">Image URL:</label><div class=col-sm-10><input class=form-control name=image ng-model=formCtrl.formData.image></div></div><div class=form-group><label class="col-sm-2 control-label">Description:</label><div class=col-sm-10><textarea class=form-control name=description ng-model=formCtrl.formData.description></textarea></div></div></div><div class="tab-pane active" id=tab-pieces><div class=form-group><label class="col-sm-2 control-label">Pieces:</label><div class=col-sm-10><div ng-repeat="piece in formCtrl.formData.pieces" class=form-group-list-item><div class=row><div class=col-sm-10><div class=row><div class=col-sm-6><div class=form-group><label>Name:</label><input class=form-control ng-model=piece.name></div></div><div class=col-sm-6><div class=form-group><label>Description:</label><textarea class=form-control type=text ng-model=piece.description></textarea></div></div></div><div class=row><div class=col-sm-6><div class=form-group><label>Full URL:</label><input class=form-control ng-model=piece.link placeholder="http://"></div></div><div class=col-sm-6><div class=form-group><label>Image URL:</label><input class=form-control ng-model=piece.image placeholder="http://"></div></div></div></div><div class=col-sm-2><div class=form-group><label>&nbsp;</label><button type=button class="btn btn-default btn-sm btn-block" ng-click=formCtrl.removePiece($index)><i class="fa fa-minus"></i>Remove</button></div></div></div></div><button type=button class="btn btn-link" ng-click=formCtrl.addPiece()><i class="fa fa-plus"></i> Add Piece</button></div></div></div></div></div><div class=col-sm-2><button ng-if=formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=exhibitForm.$invalid><i class="fa fa-save"></i>Save</button> <button ng-if=!formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=exhibitForm.$invalid><i class="fa fa-plus"></i>Create</button> <button ng-if=formCtrl.formData._id class="btn btn-danger btn-block" type=button cc-confirm-click data-confirmed-click=formCtrl.delete()><i class="fa fa-trash"></i>Delete</button></div></div></form><pre>{{ formCtrl.formData | json }}</pre></div>');
+    $templateCache.put('../public/app/views/docent/docent.html',
+        '<section class="section container"><h1 class=page-header>{{:: docentCtrl.docent.name }}</h1><img class=ex-image src="{{:: docentCtrl.docent.image }}"><p class=ex-description>{{:: docentCtrl.docent.description }}</p></section>');
     $templateCache.put('../public/app/views/exhibit/exhibit.html',
         '<section class="section container"><h1 class=page-header>{{:: exhibitCtrl.exhibit.name }}</h1><img class=ex-image ng-src="{{:: exhibitCtrl.exhibit.image }}"><p class=ex-description>{{:: exhibitCtrl.exhibit.description }}</p></section><section class=container><h2>Pieces in this exhibit</h2><div class=media ng-repeat="piece in exhibitCtrl.exhibit.pieces"><div class=media-left><a href=#><img class=media-object src={{piece.image}} alt=""></a></div><div class=media-body><h4 class=media-heading>{{piece.name}}</h4><p>{{piece.description}}</p><p><a href={{piece.link}}>Read more</a></p></div></div></section>');
     $templateCache.put('../public/app/views/exhibits/exhibits.html',
         'Hello, World!');
     $templateCache.put('../public/app/views/home/home.html',
-        '<section class="section home section-primary"><header class=container><h1>Sky Beacons</h1></header></section><div class=container><div class=row><div class=col-md-12><h2>Exhibits</h2></div><div ng-repeat="exhibit in homeCtrl.exhibits" class=col-md-4><div class="panel panel-default"><div class=panel-heading><h3 class="bb-section-heading panel-title">{{:: exhibit.name }}</h3></div><div class=panel-body><img class=img-responsive src="{{:: exhibit.image }}"> <button class="btn btn-primary pull-right" ui-sref="exhibit({id: exhibit._id})">View</button></div></div></div></div></div>');
+        '<section class="section home section-primary"><header class=container><h1>Sky Beacons</h1></header></section><div class=container><div class=row><div class=col-md-12><h2 class=home-subhead>Exhibits</h2></div><div ng-repeat="exhibit in homeCtrl.exhibits" class=col-md-4><div class="panel panel-default"><div class=panel-heading><h3 class="bb-section-heading panel-title">{{:: exhibit.name }}</h3></div><div class=panel-body><img class=img-responsive ng-src="{{:: exhibit.image }}"> <button class="btn btn-primary pull-right" ui-sref="exhibit({id: exhibit._id})">View</button></div></div></div></div><div class=row><div class=col-md-12><h2 class=home-subhead>Docents</h2></div><div ng-repeat="docent in homeCtrl.docents" class=col-md-4><div class="panel panel-default"><div class=panel-heading><h3 class="bb-section-heading panel-title">{{:: docent.name }}</h3></div><div class=panel-body><img class=img-responsive ng-src="{{:: docent.image }}"> <button class="btn btn-primary pull-right" ui-sref="docent({id: docent._id})">View</button></div></div></div></div></div>');
 }]);
 
 //# sourceMappingURL=app.js.map
