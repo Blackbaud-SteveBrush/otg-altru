@@ -6,7 +6,7 @@
   mongoose = require('mongoose');
 
   module.exports = new mongoose.Schema({
-      expertise: [String],
+      expertise: String,
       title: String
   }, {
       discriminatorKey: 'beaconType'
