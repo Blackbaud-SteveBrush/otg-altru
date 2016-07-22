@@ -1,13 +1,13 @@
 (function (angular) {
     'use strict';
 
-    function ExhibitFormController($sce, $state, ExhibitService) {
+    function DocentFormController($sce, $state, DocentService) {
         var processError,
             vm;
 
         vm = this;
         vm.formData = {
-            beaconType: 'exhibit'
+            beaconType: 'docent'
         };
 
         processError = function (data) {
@@ -21,7 +21,7 @@
         };
 
         if ($state.params.id) {
-            ExhibitService.getById($state.params.id).then(function (data) {
+            DocentService.getById($state.params.id).then(function (data) {
                 vm.formData = data;
                 vm.isReady = true;
             });
@@ -30,7 +30,7 @@
         }
 
         vm.delete = function () {
-            ExhibitService.deleteById(vm.formData._id).then(function (data) {
+            DocentService.deleteById(vm.formData._id).then(function (data) {
                 if (data.success) {
                     $state.go('home');
                 } else {
@@ -44,9 +44,9 @@
             vm.success = false;
             vm.scrollToTop = false;
             if (vm.formData._id) {
-                ExhibitService.edit(vm.formData).then(function (data) {
+                DocentService.edit(vm.formData).then(function (data) {
                     if (data.success) {
-                        vm.success = 'Exhibit successfully updated.';
+                        vm.success = 'Docent successfully updated.';
                         vm.formData = data;
                     } else {
                         processError(data);
@@ -54,9 +54,9 @@
                     vm.scrollToTop = true;
                 });
             } else {
-                ExhibitService.add(vm.formData).then(function (data) {
+                DocentService.add(vm.formData).then(function (data) {
                     if (data.success) {
-                        vm.success = 'Exhibit successfully created.';
+                        vm.success = 'Docent successfully created.';
                         vm.formData = data;
                     } else {
                         processError(data);
@@ -71,12 +71,12 @@
         };
     }
 
-    ExhibitFormController.$inject = [
+    DocentFormController.$inject = [
         '$sce',
         '$state',
-        'ExhibitService'
+        'DocentService'
     ];
 
     angular.module('sky-beacons')
-        .controller('ExhibitFormController', ExhibitFormController);
+        .controller('DocentFormController', DocentFormController);
 }(window.angular));

@@ -45,6 +45,11 @@
                 url: '/forms',
                 template: '<ui-view />'
             })
+            .state('admin.forms.docent', {
+                url: '/docent/:id',
+                templateUrl: '../public/app/views/admin/forms/docent/docent.html',
+                controller: 'DocentFormController as formCtrl'
+            })
             .state('admin.forms.exhibit', {
                 url: '/exhibit/:id',
                 templateUrl: '../public/app/views/admin/forms/exhibit/exhibit.html',

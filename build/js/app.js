@@ -45,6 +45,11 @@
                 url: '/forms',
                 template: '<ui-view />'
             })
+            .state('admin.forms.docent', {
+                url: '/docent/:id',
+                templateUrl: '../public/app/views/admin/forms/docent/docent.html',
+                controller: 'DocentFormController as formCtrl'
+            })
             .state('admin.forms.exhibit', {
                 url: '/exhibit/:id',
                 templateUrl: '../public/app/views/admin/forms/exhibit/exhibit.html',
@@ -227,29 +232,133 @@
 (function (angular) {
     'use strict';
 
-    function ExhibitFormController($state, ExhibitService) {
-        var vm;
+    function DocentFormController($sce, $state, DocentService) {
+        var processError,
+            vm;
+
         vm = this;
         vm.formData = {
-            beaconType: 'exhibit'
+            beaconType: 'docent'
+        };
+
+        processError = function (data) {
+            vm.error = data.error.message || data.error.errmsg;
+            switch (data.error.code) {
+                case 4:
+                case 5:
+                vm.needsLogin = true;
+                break;
+            }
         };
 
         if ($state.params.id) {
-            ExhibitService.getById($state.params.capabilityId).then(function (data) {
-                vm.formData = data.capability;
+            DocentService.getById($state.params.id).then(function (data) {
+                vm.formData = data;
                 vm.isReady = true;
             });
         } else {
             vm.isReady = true;
         }
 
+        vm.delete = function () {
+            DocentService.deleteById(vm.formData._id).then(function (data) {
+                if (data.success) {
+                    $state.go('home');
+                } else {
+                    processError(data);
+                }
+            });
+        };
+
         vm.submit = function () {
             vm.error = false;
             vm.success = false;
             vm.scrollToTop = false;
-
             if (vm.formData._id) {
-                ExhibitService.update(vm.formData).then(function (data) {
+                DocentService.edit(vm.formData).then(function (data) {
+                    if (data.success) {
+                        vm.success = 'Docent successfully updated.';
+                        vm.formData = data;
+                    } else {
+                        processError(data);
+                    }
+                    vm.scrollToTop = true;
+                });
+            } else {
+                DocentService.add(vm.formData).then(function (data) {
+                    if (data.success) {
+                        vm.success = 'Docent successfully created.';
+                        vm.formData = data;
+                    } else {
+                        processError(data);
+                    }
+                    vm.scrollToTop = true;
+                });
+            }
+        };
+
+        vm.trustHtml = function (markup) {
+            return $sce.trustAsHtml(markup);
+        };
+    }
+
+    DocentFormController.$inject = [
+        '$sce',
+        '$state',
+        'DocentService'
+    ];
+
+    angular.module('sky-beacons')
+        .controller('DocentFormController', DocentFormController);
+}(window.angular));
+
+(function (angular) {
+    'use strict';
+
+    function ExhibitFormController($sce, $state, ExhibitService) {
+        var processError,
+            vm;
+
+        vm = this;
+        vm.formData = {
+            beaconType: 'exhibit'
+        };
+
+        processError = function (data) {
+            vm.error = data.error.message || data.error.errmsg;
+            switch (data.error.code) {
+                case 4:
+                case 5:
+                vm.needsLogin = true;
+                break;
+            }
+        };
+
+        if ($state.params.id) {
+            ExhibitService.getById($state.params.id).then(function (data) {
+                vm.formData = data;
+                vm.isReady = true;
+            });
+        } else {
+            vm.isReady = true;
+        }
+
+        vm.delete = function () {
+            ExhibitService.deleteById(vm.formData._id).then(function (data) {
+                if (data.success) {
+                    $state.go('home');
+                } else {
+                    processError(data);
+                }
+            });
+        };
+
+        vm.submit = function () {
+            vm.error = false;
+            vm.success = false;
+            vm.scrollToTop = false;
+            if (vm.formData._id) {
+                ExhibitService.edit(vm.formData).then(function (data) {
                     if (data.success) {
                         vm.success = 'Exhibit successfully updated.';
                         vm.formData = data;
@@ -259,7 +368,7 @@
                     vm.scrollToTop = true;
                 });
             } else {
-                ExhibitService.create(vm.formData).then(function (data) {
+                ExhibitService.add(vm.formData).then(function (data) {
                     if (data.success) {
                         vm.success = 'Exhibit successfully created.';
                         vm.formData = data;
@@ -270,9 +379,14 @@
                 });
             }
         };
+
+        vm.trustHtml = function (markup) {
+            return $sce.trustAsHtml(markup);
+        };
     }
 
     ExhibitFormController.$inject = [
+        '$sce',
         '$state',
         'ExhibitService'
     ];
@@ -313,6 +427,8 @@ angular.module('sky-beacons.templates', []).run(['$templateCache', function($tem
         '<div><bb-carousel bb-carousel-style=card-large><bb-carousel-item ng-repeat="beacon in beaconsCtrl.beacons"><bb-card bb-card-size=large><bb-card-title>{{beacon.name}}</bb-card-title><bb-card-content><div class=bb-emphasized>ID</div>{{beacon.UID}}<div class=bb-emphasized style="margin-top: 10px">Type</div>{{beacon.type}}<div class=bb-emphasized style="margin-top: 10px">Description</div>{{beacon.description}}</bb-card-content><bb-card-actions><button type=button class="btn btn-default" ui-sref=admin.exhibits({slug:beacon.slug})>More information</button> <button type=button class="btn btn-primary" style="background-color: #C61C1C;border-color: #A71818">Delete</button></bb-card-actions></bb-card></bb-carousel-item></bb-carousel></div>');
     $templateCache.put('../public/app/views/admin/exhibits/exhibits.html',
         'Hello, World!');
+    $templateCache.put('../public/app/views/admin/forms/docent/docent.html',
+        '<div class=container ng-if=::formCtrl.isReady><div class=page-header bb-scroll-into-view=formCtrl.scrollToTop><h1 ng-if=formCtrl.formData._id>Edit {{ formCtrl.formData.name }}</h1><h1 ng-if=!formCtrl.formData._id>Add Docent</h1></div><div ng-if=formCtrl.success class="alert alert-success" ng-bind-html=formCtrl.trustHtml(formCtrl.success)></div><div ng-if=formCtrl.error class="alert alert-danger"><p ng-bind-html=formCtrl.trustHtml(formCtrl.error)></p></div><form name=docentForm class=form-horizontal ng-submit=formCtrl.submit() novalidate><div class=row><div class=col-sm-10><ul class="nav nav-tabs"><li role=presentation class=active><a href=#tab-details target=_self data-toggle=tab>Details</a></li><li role=presentation><a href=#tab-pieces target=_self data-toggle=tab>Pieces</a></li></ul><div class=tab-content><div class="tab-pane active" id=tab-details><div class=form-group><label class="col-sm-2 control-label">Name:</label><div class=col-sm-10><input class=form-control name=name ng-model=formCtrl.formData.name></div></div><div class=form-group><label class="col-sm-2 control-label">Beacon UID:</label><div class=col-sm-10><input class=form-control name=UID ng-model=formCtrl.formData.UID></div></div><div class=form-group><label class="col-sm-2 control-label">Title:</label><div class=col-sm-10><input class=form-control name=title ng-model=formCtrl.formData.title></div></div><div class=form-group><label class="col-sm-2 control-label">Bio:</label><div class=col-sm-10><textarea class=form-control name=description ng-model=formCtrl.formData.description></textarea></div></div></div><div class="tab-pane active" id=tab-pieces></div></div></div><div class=col-sm-2><button ng-if=formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=docentForm.$invalid><i class="fa fa-save"></i>Save</button> <button ng-if=!formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=docentForm.$invalid><i class="fa fa-plus"></i>Create</button> <button ng-if=formCtrl.formData._id class="btn btn-danger btn-block" type=button cc-confirm-click data-confirmed-click=formCtrl.delete()><i class="fa fa-trash"></i>Delete</button></div></div></form><pre>{{ formCtrl.formData | json }}</pre></div>');
     $templateCache.put('../public/app/views/admin/forms/exhibit/exhibit.html',
         '<div class=container ng-if=::formCtrl.isReady><div class=page-header bb-scroll-into-view=formCtrl.scrollToTop><h1 ng-if=formCtrl.formData._id>Edit {{ formCtrl.formData.name }}</h1><h1 ng-if=!formCtrl.formData._id>Add Exhibit</h1></div><div ng-if=formCtrl.success class="alert alert-success" ng-bind-html=formCtrl.trustHtml(formCtrl.success)></div><div ng-if=formCtrl.error class="alert alert-danger"><p ng-bind-html=formCtrl.trustHtml(formCtrl.error)></p></div><form name=exhibitForm class=form-horizontal ng-submit=formCtrl.submit() novalidate><div class=row><div class=col-sm-10><ul class="nav nav-tabs"><li role=presentation class=active><a href=#tab-details target=_self data-toggle=tab>Details</a></li><li role=presentation><a href=#tab-pieces target=_self data-toggle=tab>Pieces</a></li></ul><div class=tab-content><div class="tab-pane active" id=tab-details><div class=form-group><label class="col-sm-2 control-label">Name:</label><div class=col-sm-10><input class=form-control name=name ng-model=formCtrl.formData.name></div></div><div class=form-group><label class="col-sm-2 control-label">Beacon UID:</label><div class=col-sm-10><input class=form-control name=UID ng-model=formCtrl.formData.UID></div></div><div class=form-group><label class="col-sm-2 control-label">Description:</label><div class=col-sm-10><textarea class=form-control name=description ng-model=formCtrl.formData.description></textarea></div></div></div><div class="tab-pane active" id=tab-pieces></div></div></div><div class=col-sm-2><button ng-if=formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=exhibitForm.$invalid><i class="fa fa-save"></i>Save</button> <button ng-if=!formCtrl.formData._id class="btn btn-primary btn-lg btn-block" type=submit ng-disabled=exhibitForm.$invalid><i class="fa fa-plus"></i>Create</button> <button ng-if=formCtrl.formData._id class="btn btn-danger btn-block" type=button cc-confirm-click data-confirmed-click=formCtrl.delete()><i class="fa fa-trash"></i>Delete</button></div></div></form><pre>{{ formCtrl.formData | json }}</pre></div>');
     $templateCache.put('../public/app/views/exhibit/exhibit.html',
