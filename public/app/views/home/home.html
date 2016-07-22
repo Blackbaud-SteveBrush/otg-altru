@@ -1,4 +1,8 @@
-
+<section class="section home section-primary" >
+  <header class="container">
+      <h1>Sky Beacons</h1>
+  </header>
+</section>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -10,13 +14,13 @@
           <h3 class="bb-section-heading panel-title">{{:: exhibit.name }}</h3>
         </div>
         <div class="panel-body">
-          <button class="btn btn-primary" ui-sref="admin.forms.exhibit({id: exhibit._id})">View</button>
+          <button class="btn btn-primary" ui-sref="exhibit({id: exhibit._id})">View</button>
           <img />
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-12">
       <h2>Docents</h2>
       <div ng-repeat="docent in homeCtrl.docents" class="panel panel-default">
@@ -29,7 +33,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
-
-<!-- <a ui-sref="admin.forms.exhibit()">New Exhibit</a> -->
