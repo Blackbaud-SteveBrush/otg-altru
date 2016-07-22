@@ -11,14 +11,14 @@
           <div class="bb-emphasized" style="margin-top: 10px;">
             Type
           </div>
-          {{beacon.type}}
+          {{beacon.beaconType}}
           <div class="bb-emphasized" style="margin-top: 10px;">
             Description
           </div>
           {{beacon.description}}
         </bb-card-content>
         <bb-card-actions>
-          <button type="button" class="btn btn-default" ui-sref="admin.exhibits({slug:beacon.slug})">More information</button>
+          <button type="button" class="btn btn-default" ui-sref="admin.exhibits({id:beacon._id})">More information</button>
           <button type="button" class="btn btn-primary" style="background-color: #C61C1C;border-color: #A71818;">Delete</button>
         </bb-card-actions>
       </bb-card>
