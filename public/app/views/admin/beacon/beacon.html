@@ -1,0 +1,41 @@
+<div>
+    <bb-page-summary>
+      <bb-page-summary-image>
+        <bb-avatar
+            bb-avatar-name="beaconCtrl.beacon.name"
+            bb-avatar-src="beaconCtrl.beacon.image">
+        </bb-avatar>
+      </bb-page-summary-image>
+        <bb-page-summary-title>
+            {{beaconCtrl.beacon.name}}
+        </bb-page-summary-title>
+        <bb-page-summary-subtitle>
+            {{beaconCtrl.beacon.beaconType}}
+        </bb-page-summary-subtitle>
+        <bb-page-summary-content>
+        <span class="bb-text-block">
+            {{beaconCtrl.beacon.description}}
+        </span>
+        </bb-page-summary-content>
+        <bb-page-summary-action-bar>
+        <bb-action-bar>
+            <bb-action-bar-item ng-click="beaconCtrl.goToEdit()">
+                Edit
+            </bb-action-bar-item>
+        </bb-action-bar>
+        </bb-page-summary-action-bar>
+    </bb-page-summary>
+
+    <div style="margin-top: 10px;">
+        <bb-carousel bb-carousel-style="card-small">
+            <bb-carousel-item ng-repeat="card in beaconCtrl.cards">
+            <bb-card bb-card-size="small">
+                <bb-card-title>{{card.title}}</bb-card-title>
+                <bb-card-content style="margin-left: auto; margin-right: auto; font-size: 80px;">
+                {{card.count}}
+                </bb-card-content>
+            </bb-card>
+            </bb-carousel-item>
+        </bb-carousel>
+    </div>
+</div>

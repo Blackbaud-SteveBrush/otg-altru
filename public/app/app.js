@@ -35,10 +35,15 @@
                 templateUrl: '../public/app/views/admin/beacons/beacons.html',
                 controller: 'BeaconsListController as beaconsCtrl'
             })
-            .state('admin.exhibits', {
-                url: '/exhibits/:id',
-                templateUrl: '../public/app/views/admin/exhibits/exhibits.html',
-                controller: 'ExhibitsListController as exhibitsCtrl'
+            .state('admin.beaconPage', {
+                url: '/beacons/:id',
+                templateUrl: '../public/app/views/admin/beacon/beacon.html',
+                controller: 'BeaconController as beaconCtrl'
+            })
+            .state('admin.analytics', {
+                url: '/analytics',
+                templateUrl: '../public/app/views/admin/analytics/analytics.html',
+                controller: 'AnalyticsController as analyticsCtrl'
             })
             .state('admin.forms', {
                 abstract: true,

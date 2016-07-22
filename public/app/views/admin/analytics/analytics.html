@@ -1,0 +1,16 @@
+<div style="margin: 0 20px;">
+    <div ng-repeat="beacon in analyticsCtrl.beacons">
+        <h2>{{beacon.name}}</h2>
+            <bb-carousel bb-carousel-style="card-small">
+                <bb-carousel-item ng-repeat="card in beacon.cards">
+                <bb-card bb-card-size="small">
+                    <bb-card-title>{{card.title}}</bb-card-title>
+                    <bb-card-content style="margin-left: auto; margin-right: auto; font-size: 80px;">
+                    {{card.count}}
+                    </bb-card-content>
+                </bb-card>
+                </bb-carousel-item>
+            </bb-carousel>
+        </div>
+    </div>
+</div>
