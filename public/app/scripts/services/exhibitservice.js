@@ -56,6 +56,7 @@
 
         service.edit = function (data) {
             var deferred;
+            deferred = $q.defer();
 
             $http.put('/api/exhibits/' + data._id, {
                 data: data

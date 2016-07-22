@@ -25,8 +25,17 @@
         };
 
         self.deleteOne = function (id) {
-            return settings.model.findOneAndRemove({
-                UID: UID
+            return new Promise(function (resolve, reject) {
+                settings.model.findOneAndRemove({
+                    _id: id
+                }, function (error) {
+                    if (error) {
+                        return reject({error: { message: error}});
+                    }
+                    resolve({
+                        success: "Successfully deleted."
+                    });
+                });
             });
         };
 
@@ -42,26 +51,28 @@
             }).exec();
         };
 
-        self.findOneByUID = function (UID) {
+        self.findOneByUID = function (uid) {
             return settings.model.findOne({
-                UID: UID
+                UID: uid
             }).exec();
         };
 
         self.updateOne = function (id, data) {
-            var k;
-            return self.findOneById(id)
-                .success(function (model){
+            return new Promise(function (resolve, reject) {
+                self.findOneById(id).then(function (model) {
+                    var k;
                     for (k in data) {
                         if (data.hasOwnProperty(k)) {
                             model[k] = data[k];
                         }
                     }
-                    return model.save();
-                })
-                .catch(function (error){
-                    return error;
+                    model.save(function () {
+                        resolve(model.toObject());
+                    });
+                }).catch(function (error) {
+                    reject({ error: { message: error } });
                 });
+            });
         };
     }
 

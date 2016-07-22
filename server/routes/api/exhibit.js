@@ -18,7 +18,6 @@
             });
         },
         getExhibit: function (request, response, next) {
-            console.log(request.params.id);
             ExhibitService.findOneById(request.params.id).then(function (data) {
                 response.json(data);
             }).catch(function (error) {
@@ -43,7 +42,7 @@
             });
         },
         putExhibit: function (request, response, next) {
-            ExhibitService.update(request.params.id).then(function (data) {
+            ExhibitService.updateOne(request.params.id, request.body.data).then(function (data) {
                 response.json(data);
             }).catch(function (error) {
                 utils.parseError(response, error);
