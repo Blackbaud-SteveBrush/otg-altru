@@ -1,17 +1,18 @@
-<div>
-    <div ng-repeat="beacon in analyticsCtrl.beacons">
-        <a href="#">
-            <h2 style="margin: 0 20px;" ui-sref="admin.beaconPage({id: beacon._id})">{{beacon.name}}</h2>
-        </a>
-        <bb-carousel bb-carousel-style="card-small">
-            <bb-carousel-item ng-repeat="card in beacon.cards">
-            <bb-card bb-card-size="small">
-                <bb-card-title>{{card.title}}</bb-card-title>
-                <bb-card-content style="margin-left: auto; margin-right: auto; font-size: 80px;">
-                {{card.count}}
-                </bb-card-content>
-            </bb-card>
-            </bb-carousel-item>
-        </bb-carousel>
-    </div>
+
+<div ng-repeat="beacon in analyticsCtrl.beacons">
+  <div class="container">
+    <a href="#">
+        <h2 ui-sref="admin.beaconPage({id: beacon._id})">{{beacon.name}}</h2>
+    </a>
+  </div>
+  <bb-carousel bb-carousel-style="card-small">
+      <bb-carousel-item ng-repeat="card in beacon.cards">
+      <bb-card bb-card-size="small">
+          <bb-card-title>{{card.title}}</bb-card-title>
+          <bb-card-content style="margin-left: auto; margin-right: auto; font-size: 80px;">
+          {{card.count}}
+          </bb-card-content>
+      </bb-card>
+      </bb-carousel-item>
+  </bb-carousel>
 </div>

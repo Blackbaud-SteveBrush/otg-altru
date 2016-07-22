@@ -1,3 +1,8 @@
+h2 {
+  margin-bottom: 12px;
+}
+
+
 /**
 Home Header
 **/
@@ -74,4 +79,16 @@ h1.page-header {
 
 .btn {
     margin-top: 10px;
+}
+
+.panel-image {
+  overflow:hidden;
+
+  @media (min-width: 768px) {
+    height: 100px;
+  }
+
+  @media (min-width: 992px) {
+    height: 147px;
+  }
 }
