@@ -13,13 +13,13 @@
                 UID: request.params.uid
             }).exec().then(function (data) {
                 var url;
-                url = 'https://sky-beacons.herokuapp.com/';
+                url = 'https://sky-beacons.herokuapp.com/#/';
                 switch (data.beaconType) {
                 case 'exhibit':
                     url += 'exhibits/';
                 break;
                 }
-                url += data.slug;
+                url += data._id;
                 data.visits.push({
                     sessionId: request.session.id
                 });
