@@ -1,14 +1,14 @@
 (function (angular) {
     'use strict';
 
-    function HomeController(ExhibitService) {
+    function HomeController(DocentService, ExhibitService) {
         var vm;
 
         vm = this;
 
-        // DocentService.getAll().then(function (data) {
-        //     vm.docents = data;
-        // });
+        DocentService.getAll().then(function (data) {
+            vm.docents = data.value;
+        });
 
         ExhibitService.getAll().then(function (data) {
             vm.exhibits = data.value;
@@ -17,6 +17,7 @@
     }
 
     HomeController.$inject = [
+        'DocentService',
         'ExhibitService'
     ];
 

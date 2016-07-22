@@ -6,7 +6,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h2>Exhibits</h2>
+      <h2 class="home-subhead">Exhibits</h2>
     </div>
     <div ng-repeat="exhibit in homeCtrl.exhibits" class="col-md-4">
       <div class="panel panel-default">
@@ -14,24 +14,26 @@
           <h3 class="bb-section-heading panel-title">{{:: exhibit.name }}</h3>
         </div>
         <div class="panel-body">
-          <button class="btn btn-primary" ui-sref="exhibit({id: exhibit._id})">View</button>
-          <img src="{{:: exhibit.image }}"/>
+          <img class="img-responsive" ng-src="{{:: exhibit.image }}"/>
+          <button class="btn btn-primary pull-right" ui-sref="exhibit({id: exhibit._id})">View</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-md-12">
-      <h2>Docents</h2>
-      <div ng-repeat="docent in homeCtrl.docents" class="panel panel-default">
+      <h2 class="home-subhead">Docents</h2>
+    </div>
+    <div ng-repeat="docent in homeCtrl.docents" class="col-md-4">
+      <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="bb-section-heading panel-title">{{:: docent.name }}</h3>
         </div>
         <div class="panel-body">
-          <img />
-          <button class="btn btn-primary" ui-sref="docent({id: docent._id})">View</button>
+          <img class="img-responsive" ng-src="{{:: docent.image }}"/>
+          <button class="btn btn-primary pull-right" ui-sref="docent({id: docent._id})">View</button>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </div>

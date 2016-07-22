@@ -1,19 +1,19 @@
 (function (angular) {
     'use strict';
 
-    function ExhibitService($http, $q) {
+    function DocentService($http, $q) {
         var service;
 
         service = this;
 
         service.getAll = function () {
-            return $http.get('/api/exhibits/').then(function (res) {
+            return $http.get('/api/docents/').then(function (res) {
                 return res.data;
             });
         };
 
         service.getById = function (id) {
-            return $http.get('/api/exhibits/' + id).then(function (res) {
+            return $http.get('/api/docents/' + id).then(function (res) {
                 return res.data;
             });
         };
@@ -24,7 +24,7 @@
 
             $http({
                 method: 'DELETE',
-                url: '/api/exhibits/' + id,
+                url: '/api/docents/' + id,
                 headers: {
                     "Content-Type": "application/json;charset=utf-8"
                 }
@@ -38,7 +38,7 @@
         service.add = function (data) {
             var deferred = $q.defer();
 
-            $http.post('/api/exhibits/', {
+            $http.post('/api/docents/', {
                 data : data,
                 headers : {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -58,7 +58,7 @@
             var deferred;
             deferred = $q.defer();
 
-            $http.put('/api/exhibits/' + data._id, {
+            $http.put('/api/docents/' + data._id, {
                 data: data
             }).then(function (res) {
                 if (res.data.error) {
@@ -72,12 +72,12 @@
         };
     }
 
-    ExhibitService.$inject = [
+    DocentService.$inject = [
         '$http',
         '$q'
     ];
 
     angular.module('sky-beacons')
-        .service('ExhibitService', ExhibitService);
+        .service('DocentService', DocentService);
 
 }(window.angular));

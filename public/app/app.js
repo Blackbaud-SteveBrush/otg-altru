@@ -22,6 +22,11 @@
                 url: '/exhibits/:id',
                 templateUrl: '../public/app/views/exhibit/exhibit.html',
                 controller: 'ExhibitController as exhibitCtrl'
+            })
+            .state('docent', {
+                url: '/docents/:id',
+                templateUrl: '../public/app/views/docent/docent.html',
+                controller: 'DocentController as docentCtrl'
             });
 
         $stateProvider

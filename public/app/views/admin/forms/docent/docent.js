@@ -45,22 +45,20 @@
             vm.scrollToTop = false;
             if (vm.formData._id) {
                 DocentService.edit(vm.formData).then(function (data) {
-                    if (data.success) {
-                        vm.success = 'Docent successfully updated.';
-                        vm.formData = data;
-                    } else {
+                    if (data.error) {
                         processError(data);
                     }
+                    vm.success = 'Docent successfully updated.';
+                    vm.formData = data;
                     vm.scrollToTop = true;
                 });
             } else {
                 DocentService.add(vm.formData).then(function (data) {
-                    if (data.success) {
-                        vm.success = 'Docent successfully created.';
-                        vm.formData = data;
-                    } else {
+                    if (data.error) {
                         processError(data);
                     }
+                    vm.success = 'Docent successfully created.';
+                    vm.formData = data;
                     vm.scrollToTop = true;
                 });
             }
