@@ -36,7 +36,7 @@
                 controller: 'BeaconsListController as beaconsCtrl'
             })
             .state('admin.exhibits', {
-                url: '/exhibits/:slug',
+                url: '/exhibits/:id',
                 templateUrl: '../public/app/views/admin/exhibits/exhibits.html',
                 controller: 'ExhibitsListController as exhibitsCtrl'
             })
@@ -44,6 +44,11 @@
                 abstract: true,
                 url: '/forms',
                 template: '<ui-view />'
+            })
+            .state('admin.forms.docent', {
+                url: '/docent/:id',
+                templateUrl: '../public/app/views/admin/forms/docent/docent.html',
+                controller: 'DocentFormController as formCtrl'
             })
             .state('admin.forms.exhibit', {
                 url: '/exhibit/:id',
