@@ -59,6 +59,19 @@ h1.page-header {
     display: block;
 }
 
+.do-expertise {
+    font-size: 16px;
+    font-style: italic;
+    &::before {
+        content: 'Expertise: ';
+        font-weight: bold;
+    }
+}
+
+.well {
+    margin-top: 15px;
+}
+
 .btn {
     margin-top: 10px;
 }
