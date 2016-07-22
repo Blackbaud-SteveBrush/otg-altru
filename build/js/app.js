@@ -300,7 +300,7 @@
 (function (angular) {
     'use strict';
 
-    function AnalyticsController($stateParams, ExhibitService, $state) {
+    function AnalyticsController($stateParams, BeaconService, $state) {
         var self = this;
 
         function uniqueSessionsBetweenDates(data, startDate, endDate) {
@@ -373,7 +373,7 @@
             });
         }
 
-        ExhibitService.getAll().then(function(data) {
+        BeaconService.getAll().then(function(data) {
             var i;
 
             self.beacons = data.value;
@@ -387,7 +387,7 @@
 
     AnalyticsController.$inject = [
         '$stateParams',
-        'ExhibitService',
+        'BeaconService',
         '$state'
     ];
 
@@ -398,7 +398,7 @@
 (function (angular) {
     'use strict';
 
-    function BeaconController($stateParams, ExhibitService, $state) {
+    function BeaconController($stateParams, ExhibitService, DocentService, $state) {
         var self = this;
 
         function uniqueSessionsBetweenDates(data, startDate, endDate) {
@@ -472,14 +472,26 @@
         }
 
         ExhibitService.getById($stateParams.id).then(function(data) {
-            self.beacon = data;
+            if (data != null) {
+                self.beacon = data;
+                self.beacon.beaconType = "exhibit";
 
-            buildCards();
+                buildCards();
+            }
+        });
+
+        DocentService.getById($stateParams.id).then(function(data) {
+            if (data != null) {
+                self.beacon = data;
+                self.beacon.beaconType = "person";
+
+                buildCards();
+            }
         });
 
         self.goToEdit = function (beacon) {
             switch (self.beacon.beaconType) {
-                case 'docent':
+                case 'person':
                     $state.go('admin.forms.docent', { id: self.beacon._id });
                     break;
                 case 'exhibit':
@@ -492,6 +504,7 @@
     BeaconController.$inject = [
         '$stateParams',
         'ExhibitService',
+        'DocentService',
         '$state'
     ];
 
@@ -787,7 +800,7 @@
 
 angular.module('sky-beacons.templates', []).run(['$templateCache', function($templateCache) {
     $templateCache.put('../public/app/views/admin/analytics/analytics.html',
-        '<div><div ng-repeat="beacon in analyticsCtrl.beacons"><h2 style="margin: 0 20px">{{beacon.name}}</h2><bb-carousel bb-carousel-style=card-small><bb-carousel-item ng-repeat="card in beacon.cards"><bb-card bb-card-size=small><bb-card-title>{{card.title}}</bb-card-title><bb-card-content style="margin-left: auto; margin-right: auto; font-size: 80px">{{card.count}}</bb-card-content></bb-card></bb-carousel-item></bb-carousel></div></div>');
+        '<div><div ng-repeat="beacon in analyticsCtrl.beacons"><a href=#><h2 style="margin: 0 20px" ui-sref="admin.beaconPage({id: beacon._id})">{{beacon.name}}</h2></a><bb-carousel bb-carousel-style=card-small><bb-carousel-item ng-repeat="card in beacon.cards"><bb-card bb-card-size=small><bb-card-title>{{card.title}}</bb-card-title><bb-card-content style="margin-left: auto; margin-right: auto; font-size: 80px">{{card.count}}</bb-card-content></bb-card></bb-carousel-item></bb-carousel></div></div>');
     $templateCache.put('../public/app/views/admin/beacon/beacon.html',
         '<div><bb-page-summary><bb-page-summary-image><bb-avatar bb-avatar-name=beaconCtrl.beacon.name bb-avatar-src=beaconCtrl.beacon.image></bb-avatar></bb-page-summary-image><bb-page-summary-title>{{beaconCtrl.beacon.name}}</bb-page-summary-title><bb-page-summary-subtitle>{{beaconCtrl.beacon.beaconType}}</bb-page-summary-subtitle><bb-page-summary-content><span class=bb-text-block>{{beaconCtrl.beacon.description}}</span></bb-page-summary-content><bb-page-summary-action-bar><bb-action-bar><bb-action-bar-item ng-click=beaconCtrl.goToEdit()>Edit</bb-action-bar-item></bb-action-bar></bb-page-summary-action-bar></bb-page-summary><div style="margin-top: 10px"><bb-carousel bb-carousel-style=card-small><bb-carousel-item ng-repeat="card in beaconCtrl.cards"><bb-card bb-card-size=small><bb-card-title>{{card.title}}</bb-card-title><bb-card-content style="margin-left: auto; margin-right: auto; font-size: 80px">{{card.count}}</bb-card-content></bb-card></bb-carousel-item></bb-carousel></div></div>');
     $templateCache.put('../public/app/views/admin/beacons/beacons.html',
