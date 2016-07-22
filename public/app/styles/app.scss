@@ -27,3 +27,28 @@ section.home {
 h3.bb-section-heading {
     text-align: center;
 }
+
+h1.page-header {
+    border-bottom: 1px solid black;
+    padding-bottom: 5px
+}
+
+.ex-description {
+    font-size: 16px;
+    margin-top: 15px;
+    &::before {
+        content: 'Description: ';
+        font-weight: bold;
+    }
+}
+
+.ex-image {
+    border: 2px solid black;
+    border-radius: 3px;
+    margin: 0 auto;
+    display: block;
+}
+
+.btn {
+    margin-top: 10px;
+}

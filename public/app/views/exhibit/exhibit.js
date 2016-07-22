@@ -7,7 +7,6 @@
         vm = this;
 
         ExhibitService.getById($stateParams.id).then(function (data) {
-            console.log('data', data);
             vm.exhibit = data;
         });
     }
