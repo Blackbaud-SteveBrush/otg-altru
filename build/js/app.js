@@ -483,7 +483,7 @@
         DocentService.getById($stateParams.id).then(function(data) {
             if (data != null) {
                 self.beacon = data;
-                self.beacon.beaconType = "docent";
+                self.beacon.beaconType = "person";
 
                 buildCards();
             }
@@ -491,7 +491,7 @@
 
         self.goToEdit = function (beacon) {
             switch (self.beacon.beaconType) {
-                case 'docent':
+                case 'person':
                     $state.go('admin.forms.docent', { id: self.beacon._id });
                     break;
                 case 'exhibit':
