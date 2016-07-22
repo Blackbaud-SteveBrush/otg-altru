@@ -1,5 +1,24 @@
 <section class="section container">
   <h1 class="page-header">{{:: exhibitCtrl.exhibit.name }}</h1>
-  <img class="ex-image" src="{{:: exhibitCtrl.exhibit.image }}" />
+  <img class="ex-image" ng-src="{{:: exhibitCtrl.exhibit.image }}" />
   <p class="ex-description">{{:: exhibitCtrl.exhibit.description }}</p>
+</section>
+<section class="container">
+  <h2>Pieces in this exhibit</h2>
+  <div class="media" ng-repeat="piece in exhibitCtrl.exhibit.pieces">
+    <div class="media-left">
+      <a href="#">
+        <img class="media-object" src="{{piece.image}}" alt="">
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{piece.name}}</h4>
+      <p>
+        {{piece.description}}
+      </p>
+      <p>
+        <a href="{{piece.link}}">Read more</a>
+      </p>
+    </div>
+  </div>
 </section>
